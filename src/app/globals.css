@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    @apply border-zen-200;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-zen-50 text-zen-800 font-zen antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-display: swap;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Performance optimizations */
+  * {
+    box-sizing: border-box;
+  }
+  
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .zen-container {
+    @apply max-w-2xl mx-auto px-6 py-8;
+  }
+  
+  .zen-card {
+    @apply bg-white rounded-2xl shadow-sm border border-zen-200 p-8 backdrop-blur-sm bg-white/95;
+  }
+  
+  .zen-card-glass {
+    @apply bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 p-8;
+  }
+  
+  .zen-input {
+    @apply w-full px-4 py-4 border border-zen-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-earth-400 focus:border-transparent transition-all duration-300 bg-white/90 backdrop-blur-sm font-zen text-zen-800 placeholder:text-zen-400;
+  }
+  
+  .zen-button {
+    @apply w-full py-4 px-8 bg-gradient-to-r from-zen-800 to-zen-900 text-white rounded-xl font-medium hover:from-zen-700 hover:to-zen-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-zen-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .zen-button-secondary {
+    @apply w-full py-4 px-8 bg-zen-100 text-zen-800 rounded-xl font-medium hover:bg-zen-200 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-zen-400 focus:ring-offset-2 shadow-sm hover:shadow-md transform hover:-translate-y-0.5;
+  }
+  
+  .zen-text {
+    @apply text-zen-700 leading-relaxed font-zen;
+  }
+  
+  .zen-heading {
+    @apply text-zen-900 font-heading font-semibold leading-tight tracking-tight;
+  }
+  
+  .zen-title {
+    @apply font-heading text-zen-900 font-bold tracking-tight leading-none;
+  }
+  
+  .zen-checkbox {
+    @apply h-6 w-6 text-earth-600 focus:ring-earth-500 border-zen-300 rounded-lg transition-all duration-200 shadow-sm;
+  }
+  
+  .zen-fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .zen-slide-up {
+    @apply animate-slide-up;
+  }
+  
+  .zen-gradient-bg {
+    @apply bg-gradient-to-br from-zen-50 via-white to-earth-50;
+  }
+  
+  .zen-glass-effect {
+    @apply backdrop-blur-md bg-white/30 border border-white/20 shadow-xl;
+  }
+  
+  .zen-shadow-soft {
+    @apply shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+  
+  .zen-border-subtle {
+    @apply border border-zen-200/50;
+  }
+} 

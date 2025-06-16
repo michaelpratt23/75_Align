@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile       UserProfile?
+  pledges       Pledge[]
+  dailyProgress DailyProgress[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  id                  String    @id @default(cuid())
+  userId              String    @unique
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  onboardingCompleted Boolean   @default(false)
+  challengeStartDate  DateTime?
+  fullName            String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@map("user_profiles")
+}
+
+model Pledge {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  text        String
+  category    String
+  type        String
+  isDaily     Boolean     @default(true)
+  order       Int         @default(0)
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  dailyProgress DailyProgress[]
+
+  @@map("pledges")
+}
+
+model DailyProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pledgeId    String
+  pledge      Pledge   @relation(fields: [pledgeId], references: [id], onDelete: Cascade)
+  date        DateTime
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, pledgeId, date])
+  @@map("daily_progress")
+}
+
+// Note: Using String instead of enum for SQLite compatibility
+// Category values: "ACTIVITY", "NUTRITION", "MIND", "GROWTH"
+// PledgeType values: "DAILY_PLEDGE", "COMMITMENT" 

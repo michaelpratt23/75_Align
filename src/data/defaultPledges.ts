@@ -34,7 +34,7 @@ export const defaultPledges = {
     },
     {
       id: 'nutrition-2',
-      text: 'Eat a healthy lunch with super greens and protein',
+      text: 'Eat a healthy lunch with super greens and protein (fish or chicken)',
       type: 'DAILY_PLEDGE' as const,
       isDaily: true
     },

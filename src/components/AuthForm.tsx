@@ -95,14 +95,11 @@ export default function AuthForm() {
                 id="email"
                 name="email"
                 required
-                className="zen-input pl-12"
+                className="zen-input"
                 placeholder="your.email@example.com"
                 value={formData.email}
                 onChange={handleInputChange}
               />
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                <div className="w-4 h-4 bg-gradient-to-br from-earth-400 to-earth-500 rounded-full"></div>
-              </div>
             </div>
           </div>
 
@@ -116,14 +113,11 @@ export default function AuthForm() {
                 id="password"
                 name="password"
                 required
-                className="zen-input pl-12"
+                className="zen-input"
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleInputChange}
               />
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                <div className="w-4 h-4 bg-gradient-to-br from-bamboo-400 to-bamboo-500 rounded-full"></div>
-              </div>
             </div>
           </div>
 
@@ -138,14 +132,11 @@ export default function AuthForm() {
                   id="confirmPassword"
                   name="confirmPassword"
                   required
-                  className="zen-input pl-12"
+                  className="zen-input"
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                 />
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                  <div className="w-4 h-4 bg-gradient-to-br from-sakura-400 to-sakura-500 rounded-full"></div>
-                </div>
               </div>
             </div>
           )}

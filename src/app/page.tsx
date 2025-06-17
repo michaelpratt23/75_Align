@@ -71,16 +71,13 @@ export default function Home() {
       <div className="zen-container relative z-10">
         <div className="text-center mb-12 zen-fade-in">
           <div className="mb-6">
-            <h1 className="zen-title text-6xl md:text-7xl lg:text-8xl mb-4 bg-gradient-to-br from-zen-900 via-zen-800 to-earth-700 bg-clip-text text-transparent">
+            <h1 className="zen-title text-6xl md:text-7xl lg:text-8xl mb-4 bg-gradient-to-br from-zen-900 via-zen-800 to-earth-700 bg-clip-text text-transparent leading-normal pb-2">
               75 Align
             </h1>
             <div className="h-1 w-24 bg-gradient-to-r from-earth-400 to-bamboo-400 mx-auto rounded-full"></div>
           </div>
           <p className="zen-text text-xl md:text-2xl text-zen-600 max-w-2xl mx-auto leading-relaxed">
             Your journey to wellness, discipline, and inner harmony
-          </p>
-          <p className="zen-text text-lg text-zen-500 mt-4">
-            75 days of transformation
           </p>
         </div>
         
@@ -89,24 +86,30 @@ export default function Home() {
         </div>
         
         {/* Subtle decorative elements */}
-        <div className="mt-16 flex justify-center space-x-8 opacity-60">
+        <div className="mt-16 flex justify-center space-x-6 opacity-80">
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-earth-300 to-earth-400 rounded-full flex items-center justify-center mb-2">
-              <span className="text-white font-bold text-lg">💪</span>
+            <div className="w-12 h-12 bg-earth-100 rounded-full flex items-center justify-center mb-2">
+              <span className="text-earth-500 text-lg">⚡</span>
             </div>
-            <p className="text-xs text-zen-500">Body</p>
+            <p className="text-xs text-earth-400">Activity</p>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-bamboo-300 to-bamboo-400 rounded-full flex items-center justify-center mb-2">
-              <span className="text-white font-bold text-lg">🧠</span>
+            <div className="w-12 h-12 bg-earth-100 rounded-full flex items-center justify-center mb-2">
+              <span className="text-earth-500 text-lg">🍎</span>
             </div>
-            <p className="text-xs text-zen-500">Mind</p>
+            <p className="text-xs text-earth-400">Nutrition</p>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-sakura-300 to-sakura-400 rounded-full flex items-center justify-center mb-2">
-              <span className="text-white font-bold text-lg">✨</span>
+            <div className="w-12 h-12 bg-earth-100 rounded-full flex items-center justify-center mb-2">
+              <span className="text-earth-500 text-lg">🧘</span>
             </div>
-            <p className="text-xs text-zen-500">Soul</p>
+            <p className="text-xs text-earth-400">Mind</p>
+          </div>
+          <div className="text-center">
+            <div className="w-12 h-12 bg-earth-100 rounded-full flex items-center justify-center mb-2">
+              <span className="text-earth-500 text-lg">🌱</span>
+            </div>
+            <p className="text-xs text-earth-400">Growth</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface Pledge {
   id: string
@@ -27,6 +27,15 @@ export default function OnboardingStep({
   const [pledges, setPledges] = useState<Pledge[]>(initialPledges)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editText, setEditText] = useState('')
+  const [newlyCreatedIds, setNewlyCreatedIds] = useState<Set<string>>(new Set())
+
+  // Update pledges when initialPledges prop changes (when switching categories)
+  useEffect(() => {
+    setPledges(initialPledges)
+    setEditingId(null)
+    setEditText('')
+    setNewlyCreatedIds(new Set())
+  }, [initialPledges])
 
   const handleEdit = (pledge: Pledge) => {
     setEditingId(pledge.id)
@@ -39,9 +48,24 @@ export default function OnboardingStep({
     ))
     setEditingId(null)
     setEditText('')
+    // Remove from newly created set once saved
+    setNewlyCreatedIds(prev => {
+      const newSet = new Set(prev)
+      newSet.delete(id)
+      return newSet
+    })
   }
 
   const handleCancelEdit = () => {
+    if (editingId && newlyCreatedIds.has(editingId)) {
+      // If this is a newly created pledge that hasn't been saved, delete it
+      setPledges(prev => prev.filter(p => p.id !== editingId))
+      setNewlyCreatedIds(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(editingId)
+        return newSet
+      })
+    }
     setEditingId(null)
     setEditText('')
   }
@@ -60,6 +84,8 @@ export default function OnboardingStep({
     setPledges(prev => [...prev, newPledge])
     setEditingId(newPledge.id)
     setEditText(newPledge.text)
+    // Track this as a newly created pledge
+    setNewlyCreatedIds(prev => new Set(prev).add(newPledge.id))
   }
 
   const togglePledgeType = (id: string) => {

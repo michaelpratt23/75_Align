@@ -78,7 +78,7 @@
   }
   
   .zen-title {
-    @apply font-heading text-zen-900 font-bold tracking-tight leading-none;
+    @apply font-heading text-zen-900 font-bold tracking-tight leading-tight;
   }
   
   .zen-checkbox {

@@ -10,7 +10,10 @@ import { defaultPledges } from '@/data/defaultPledges'
 
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(0)
-  const [pledges, setPledges] = useState(defaultPledges)
+  const [pledges, setPledges] = useState(() => {
+    // Create a deep copy to avoid reference issues
+    return JSON.parse(JSON.stringify(defaultPledges))
+  })
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const router = useRouter()
@@ -54,7 +57,9 @@ export default function OnboardingPage() {
 
   const handleStepComplete = (stepPledges: any[]) => {
     const currentCategory = categories[currentStep]
-    setPledges(prev => ({
+    
+    // Update the pledges for the completed category
+    setPledges((prev: typeof defaultPledges) => ({
       ...prev,
       [currentCategory]: stepPledges
     }))

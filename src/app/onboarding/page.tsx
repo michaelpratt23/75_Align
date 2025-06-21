@@ -126,9 +126,9 @@ export default function OnboardingPage() {
                 }`}
               />
             ))}
+                      </div>
+            <p className="zen-text">Step {currentStep + 1} of {categories.length}</p>
           </div>
-          <p className="zen-text">Step {currentStep + 1} of {categories.length}</p>
-        </div>
 
         <OnboardingStep
           category={currentCategory}

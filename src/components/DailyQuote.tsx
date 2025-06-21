@@ -86,9 +86,6 @@ export default function DailyQuote() {
               <cite className="text-earth-600 font-semibold text-lg font-heading">
                 — {quote.author}
               </cite>
-              <p className="text-zen-500 text-sm mt-2 font-medium">
-                Today's wisdom
-              </p>
             </div>
           </>
         )}

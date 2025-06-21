@@ -15,9 +15,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  profile       UserProfile?
-  pledges       Pledge[]
-  dailyProgress DailyProgress[]
+  profile             UserProfile?
+  pledges             Pledge[]
+  dailyProgress       DailyProgress[]
+  dailyAcknowledgments DailyAcknowledgment[]
 
   @@map("users")
 }
@@ -44,6 +45,7 @@ model Pledge {
   type        String
   isDaily     Boolean     @default(true)
   order       Int         @default(0)
+  timeOrder   String?     // morning, afternoon, evening for daily pledges
   isActive    Boolean     @default(true)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -67,6 +69,18 @@ model DailyProgress {
 
   @@unique([userId, pledgeId, date])
   @@map("daily_progress")
+}
+
+model DailyAcknowledgment {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date          DateTime
+  acknowledgedAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  @@unique([userId, date])
+  @@map("daily_acknowledgments")
 }
 
 // Note: Using String instead of enum for SQLite compatibility

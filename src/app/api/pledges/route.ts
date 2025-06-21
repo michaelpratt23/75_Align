@@ -48,11 +48,20 @@ export async function GET(request: Request) {
       id: pledge.id,
       text: pledge.text,
       category: pledge.category,
+      type: pledge.type,
       isDaily: pledge.isDaily,
+      timeOrder: pledge.timeOrder,
       completed: pledge.dailyProgress.length > 0 ? pledge.dailyProgress[0].completed : false
     }))
 
-    return NextResponse.json({ pledges: pledgesWithCompletion })
+    // Separate daily pledges and commitments
+    const dailyPledges = pledgesWithCompletion.filter(pledge => pledge.isDaily)
+    const commitments = pledgesWithCompletion.filter(pledge => !pledge.isDaily)
+
+    return NextResponse.json({ 
+      pledges: dailyPledges,
+      commitments: commitments
+    })
   } catch (error) {
     console.error('Error fetching pledges:', error)
     return NextResponse.json(

@@ -38,19 +38,29 @@ export async function POST(request: Request) {
       })
 
       // Create pledges
-      const pledgeData = []
-      for (const [category, categoryPledges] of Object.entries(pledges)) {
-        for (const [index, pledge] of (categoryPledges as any[]).entries()) {
+      const pledgeData: Array<{
+        userId: string
+        text: string
+        category: string
+        type: string
+        isDaily: boolean
+        order: number
+        timeOrder: string | null
+      }> = []
+      
+      Object.entries(pledges).forEach(([category, categoryPledges]) => {
+        (categoryPledges as any[]).forEach((pledge, index) => {
           pledgeData.push({
             userId: decoded.userId,
             text: pledge.text,
-            category: category as any,
-            type: pledge.type as any,
+            category: category,
+            type: pledge.type,
             isDaily: pledge.isDaily,
-            order: index
+            order: index,
+            timeOrder: pledge.order || null // Store the time-based order (morning/afternoon/evening)
           })
-        }
-      }
+        })
+      })
 
       await tx.pledge.createMany({
         data: pledgeData

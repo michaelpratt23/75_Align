@@ -7,6 +7,7 @@ interface Pledge {
   text: string
   type: 'DAILY_PLEDGE' | 'COMMITMENT'
   isDaily: boolean
+  order: 'morning' | 'afternoon' | 'evening' | null
 }
 
 interface OnboardingStepProps {
@@ -79,7 +80,8 @@ export default function OnboardingStep({
       id: `custom-${Date.now()}`,
       text: 'New commitment',
       type: 'DAILY_PLEDGE',
-      isDaily: true
+      isDaily: true,
+      order: 'morning'
     }
     setPledges(prev => [...prev, newPledge])
     setEditingId(newPledge.id)
@@ -94,9 +96,16 @@ export default function OnboardingStep({
         ? { 
             ...p, 
             type: p.type === 'DAILY_PLEDGE' ? 'COMMITMENT' : 'DAILY_PLEDGE',
-            isDaily: p.type === 'COMMITMENT'
+            isDaily: p.type === 'COMMITMENT',
+            order: p.type === 'COMMITMENT' ? 'morning' : null
           } 
         : p
+    ))
+  }
+
+  const handleOrderChange = (id: string, order: 'morning' | 'afternoon' | 'evening') => {
+    setPledges(prev => prev.map(p => 
+      p.id === id ? { ...p, order } : p
     ))
   }
 
@@ -118,19 +127,66 @@ export default function OnboardingStep({
                   className="w-full p-3 border border-zen-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-earth-400 resize-none"
                   rows={2}
                 />
-                <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-4 mb-3">
+                  <label className="text-sm font-medium text-zen-700">Type:</label>
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => handleSaveEdit(pledge.id)}
-                      className="px-4 py-2 bg-earth-600 text-white rounded-lg text-sm hover:bg-earth-700 transition-colors"
+                      onClick={() => togglePledgeType(pledge.id)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                        pledge.type === 'DAILY_PLEDGE' 
+                          ? 'bg-earth-500 text-white' 
+                          : 'bg-zen-200 text-zen-700 hover:bg-zen-300'
+                      }`}
                     >
-                      Save
+                      Daily Pledge
                     </button>
+                    <button
+                      onClick={() => togglePledgeType(pledge.id)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                        pledge.type === 'COMMITMENT' 
+                          ? 'bg-earth-500 text-white' 
+                          : 'bg-zen-200 text-zen-700 hover:bg-zen-300'
+                      }`}
+                    >
+                      Commitment
+                    </button>
+                  </div>
+                </div>
+                
+                {pledge.type === 'DAILY_PLEDGE' && (
+                  <div className="flex items-center space-x-4 mb-3">
+                    <label className="text-sm font-medium text-zen-700">Order:</label>
+                    <div className="flex space-x-2">
+                      {(['morning', 'afternoon', 'evening'] as const).map((timeOption) => (
+                        <button
+                          key={timeOption}
+                          onClick={() => handleOrderChange(pledge.id, timeOption)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium transition-colors capitalize ${
+                            pledge.order === timeOption
+                              ? 'bg-earth-500 text-white' 
+                              : 'bg-zen-200 text-zen-700 hover:bg-zen-300'
+                          }`}
+                        >
+                          {timeOption}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <div className="flex justify-end items-center">
+                  <div className="flex space-x-2">
                     <button
                       onClick={handleCancelEdit}
                       className="px-4 py-2 bg-zen-200 text-zen-700 rounded-lg text-sm hover:bg-zen-300 transition-colors"
                     >
                       Cancel
+                    </button>
+                    <button
+                      onClick={() => handleSaveEdit(pledge.id)}
+                      className="px-4 py-2 bg-earth-600 text-white rounded-lg text-sm hover:bg-earth-700 transition-colors"
+                    >
+                      Save
                     </button>
                   </div>
                 </div>
@@ -150,6 +206,12 @@ export default function OnboardingStep({
                     >
                       {pledge.type === 'DAILY_PLEDGE' ? 'Daily Pledge' : 'Commitment'}
                     </button>
+                    
+                    {pledge.type === 'DAILY_PLEDGE' && pledge.order && (
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-earth-100 text-earth-700 capitalize">
+                        {pledge.order}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center space-x-2 ml-4">

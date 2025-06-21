@@ -27,14 +27,16 @@ export default function OnboardingFinal({
   categoryHeaders,
   onComplete
 }: OnboardingFinalProps) {
-  const [fullName, setFullName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
 
   const categories = ['ACTIVITY', 'NUTRITION', 'MIND', 'GROWTH'] as const
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (fullName.trim()) {
-      onComplete(fullName.trim())
+    const fullName = `${firstName.trim()} ${lastName.trim()}`.trim()
+    if (firstName.trim() && lastName.trim()) {
+      onComplete(fullName)
     }
   }
 
@@ -79,17 +81,33 @@ export default function OnboardingFinal({
 
           <div className="bg-zen-100 rounded-lg p-6 mb-8">
             <div className="zen-text leading-relaxed">
-              <p className="mb-4">
-                I, <span className="inline-block min-w-[200px] border-b-2 border-earth-400 px-2 py-1">
-                  <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Enter your full name"
-                    className="bg-transparent outline-none text-zen-800 font-medium text-center w-full"
-                  />
-                </span>, pledge to show up for myself every day for the next 75 days by following the commitments above, strengthening my body, mind, and character through daily action.
-              </p>
+              <div className="mb-4">
+                <p className="mb-4">I pledge to show up for myself every day for the next 75 days by following the commitments above, strengthening my body, mind, and character through daily action.</p>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-medium text-zen-700 mb-2">First Name</label>
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Enter first name"
+                      className="zen-input"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-zen-700 mb-2">Last Name</label>
+                    <input
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Enter last name"
+                      className="zen-input"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
               <p className="text-center font-medium text-earth-700">
                 This is my <strong>75 Align</strong>.
               </p>
@@ -99,7 +117,7 @@ export default function OnboardingFinal({
           <form onSubmit={handleSubmit}>
             <button
               type="submit"
-              disabled={!fullName.trim()}
+              disabled={!firstName.trim() || !lastName.trim()}
               className="zen-button"
             >
               Start 75 Align
